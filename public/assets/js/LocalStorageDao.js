@@ -7,7 +7,7 @@ class LocalStorageDao {
     }
 
     getStoredData(id) {
-        return JSON.parse(this.storage.getItem(id))
+        return JSON.parse(this.storage.getItem(id));
     }
 
     saveObject(item, stepId) {

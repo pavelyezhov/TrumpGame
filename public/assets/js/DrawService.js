@@ -18,7 +18,7 @@ class DrawService {
         var records = this.dao.getStoredData('playerRecordsId');
 
         for (var key in records) {
-            tableHTML += '<tr><td>' + key + '</td><td>' + records[key] + '</td></tr>'
+            tableHTML += '<tr><td>' + key + '</td><td>' + records[key] + '</td></tr>';
         }
         tableHTML += '</table>';
         return tableHTML;

@@ -17,9 +17,9 @@ class Router {
         return this.currentRoute;
     }
 
-    findNewActiveRoute(url) {
+    findNewActiveRoute(providedUrl) {
         // return just part of url after # symbol
-        var url = url.split('#').pop();
+        var url = providedUrl.split('#').pop();
 
         return this.routes.find((route) => {
             if (typeof route.match === 'string') {

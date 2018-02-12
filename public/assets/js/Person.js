@@ -64,14 +64,14 @@ class Person {
         this.deltaX = 0;
         this.deltaY = 0;
 
-        options.left && (this.deltaX = -10) && (this.moveDirection = 'left');
-        options.right && (this.deltaX = 10) && (this.moveDirection = 'right');
-        options.up && (this.deltaY = 10) && (this.moveDirection = 'up');
-        options.down && (this.deltaY = -10) && (this.moveDirection = 'down');
+        var a = options.left && (this.deltaX = -10) && (this.moveDirection = 'left');
+        var b = options.right && (this.deltaX = 10) && (this.moveDirection = 'right');
+        var c = options.up && (this.deltaY = 10) && (this.moveDirection = 'up');
+        var d = options.down && (this.deltaY = -10) && (this.moveDirection = 'down');
 
         //this.angle += this.moveAngle * Math.PI / 180;
-        this.x += this.deltaX
-        this.y -= this.deltaY
+        this.x += this.deltaX;
+        this.y -= this.deltaY;
 
 
         xPerson = this.x;

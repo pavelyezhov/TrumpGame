@@ -105,7 +105,7 @@ function prepareElements(){
 
     var options = {
         routes: routes
-    }
+    };
     var router = new Router(options);
 
 

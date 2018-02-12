@@ -99,7 +99,7 @@ class EnemyType1 extends Person {
 
 function defineXStepSigh(x, step) {
     var diff = xPerson - x;
-    var sign = diff === 0 ? 0 : (diff > 0 ? 1 : -1)
+    var sign = diff === 0 ? 0 : (diff > 0 ? 1 : -1);
 
     return Math.abs(diff) < step ? sign : sign * step;
 }

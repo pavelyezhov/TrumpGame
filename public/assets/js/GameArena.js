@@ -50,10 +50,10 @@ GameArena.prototype = {
             e.preventDefault();
             this.keys = (this.keys || []);
             this.keys[e.keyCode] = (e.type == "keydown");
-        })
+        });
         window.addEventListener('keyup', (e) => {
             this.keys[e.keyCode] = (e.type == "keydown");
-        })
+        });
     },
     stop() {
         clearInterval(this.interval);
@@ -197,11 +197,12 @@ GameArena.prototype = {
 
         frame.enemies.forEach((object) => {
             var item = JSON.parse(object);
+            var enemy;
             if(item.visionRadius){
-                var enemy = new EnemyType1(this.ctx, item.width, item.height, item.color, item.x, item.y, item.speedV, item.speedH, item.visionRadius);
+                enemy = new EnemyType1(this.ctx, item.width, item.height, item.color, item.x, item.y, item.speedV, item.speedH, item.visionRadius);
                 enemy.update(this.ctx);
             } else{
-                var enemy = new EnemyType2(this.ctx, item.width, item.height, item.color, item.x, item.y);
+                enemy = new EnemyType2(this.ctx, item.width, item.height, item.color, item.x, item.y);
                 enemy.update(this.ctx);
             }
         });
@@ -251,4 +252,4 @@ GameArena.prototype = {
         this.stepId++;*/
     }
 
-}
+};
