@@ -1,8 +1,3 @@
-import DAO from './Dao';
-import LocalStorageDao from './LocalStorageDao';
-import DrawService from './DrawService';
-import Router from './Router';
-
 var FIELD_WIDTH  = document.documentElement.clientWidth;
 var FIELD_HEIGHT = document.documentElement.clientHeight;
 
@@ -104,7 +99,7 @@ var routes = [
 
 
 
-export function prepareElements(){
+function prepareElements(){
 
     location.hash = '/game';
 
@@ -151,7 +146,6 @@ function resetStartButtonToInitialState(){
     var controlsArea = document.getElementById('controlsArea');
     controlsArea.children[0].src = 'img/play.png';
 }
-
 
 
 

@@ -100,5 +100,3 @@ class DAO {
         return foundElem;
     }
 }
-
-export default DAO;

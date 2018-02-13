@@ -1,5 +1,3 @@
-import prepareElements from './script';
-
-;(function(){
+(function(){
     prepareElements();
 }) ();
