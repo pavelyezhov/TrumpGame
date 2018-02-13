@@ -44,3 +44,5 @@ class EnemyType2 extends Person {
         return 'EnemyType2';
     }
 }
+
+export default EnemyType2;

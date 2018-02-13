@@ -1,3 +1,8 @@
+import DAO from './Dao';
+import LocalStorageDao from './LocalStorageDao';
+import DrawService from './DrawService';
+import Router from './Router';
+
 var FIELD_WIDTH  = document.documentElement.clientWidth;
 var FIELD_HEIGHT = document.documentElement.clientHeight;
 
@@ -99,7 +104,7 @@ var routes = [
 
 
 
-function prepareElements(){
+export function prepareElements(){
 
     location.hash = '/game';
 

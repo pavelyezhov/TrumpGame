@@ -110,3 +110,5 @@ function defineYStepSigh(y, step) {
 
     return Math.abs(diff) < step ? 0 : sign * step;
 }
+
+export default EnemyType1;

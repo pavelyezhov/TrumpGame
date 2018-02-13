@@ -69,3 +69,5 @@ class LocalStorageDao {
     }
 
 }
+
+export default LocalStorageDao;

@@ -1,3 +1,11 @@
+import DAO from './Dao';
+import LocalStorageDao from './LocalStorageDao';
+import DrawService from './DrawService';
+import GameCache from './GameCache';
+import EnemyType1 from './EnemyType1';
+import EnemyType2 from './EnemyType2';
+import Person from './Person';
+
 function GameArena(element, width, height, Person) {
     this.fbDao = new DAO();
     this.lsDao = new LocalStorageDao();
