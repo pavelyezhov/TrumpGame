@@ -34,7 +34,7 @@ class DrawService {
             var time = data[i].time;
             tableHTML += '<tr id=' + (i + 1) + '>' +
 
-                '<td>' + '<a href="#/game">' + player + '</a>' + '</td>' +
+                '<td>' + '<a href="#/showGame">' + player + '</a>' + '</td>' +
                 '<td>' + score + '</td>' +
                 '<td>' + new Date(time).toLocaleString() + '</td>' +
                 '</tr>';

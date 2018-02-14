@@ -27,6 +27,9 @@ var routes = [
             var gameArea = document.getElementById('gameArea');
             if(gameArea){
                 gameArea.className = 'gameArea active';
+                resetStartButtonToInitialState();
+                makeReplayAreaPassive();
+                makeControlsAreaActive();
             }
         },
         onEnter: () => {},
@@ -41,6 +44,31 @@ var routes = [
             // Change action icon
             var controlsArea = document.getElementById('controlsArea');
             controlsArea.children[0].src = 'img/play.png';
+            gameArena.stop();
+        }
+    },
+    {
+        name: 'showGame',
+        match: /[/]showGame/,
+        onBeforeEnter: () => {
+            var gameArea = document.getElementById('gameArea');
+            if(gameArea){
+                gameArea.className = 'gameArea active';
+            }
+        },
+        onEnter: () => {},
+        onLeave: () => {
+
+
+            // Hide game area
+            var gameArea = document.getElementById('gameArea');
+            gameArea.className = 'gameArea passive';
+
+            // Change action icon
+            var controlsArea = document.getElementById('controlsArea');
+            controlsArea.children[0].src = 'img/play.png';
+
+            // Stop the game
             gameArena.stop();
         }
     },
@@ -118,7 +146,7 @@ function prepareElements(){
         var activeImg = this.children[0].src;
         if(activeImg.includes('play')){
             gameArena.start();
-            this.children[0].src = 'img/stop.png';
+            this.children[0].src = 'img/pause.png';
         } else{
             gameArena.stop();
             this.children[0].src = 'img/play.png';
@@ -145,6 +173,18 @@ function prepareElements(){
 function resetStartButtonToInitialState(){
     var controlsArea = document.getElementById('controlsArea');
     controlsArea.children[0].src = 'img/play.png';
+}
+
+
+function makeReplayAreaPassive(){
+
+    var replayArea = document.getElementById('replayArea');
+    replayArea.className = 'replayArea passive';
+}
+
+function makeControlsAreaActive(){
+    var controlsArea = document.getElementById('controlsArea');
+    controlsArea.className = '';
 }
 
 

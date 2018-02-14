@@ -28,7 +28,7 @@ gulp.task('jshint', function () {
 gulp.task('concat', function() {
     return gulp.src(['./assets/js/Person.js', './assets/js/EnemyType1.js', './assets/js/EnemyType2.js',
         './assets/js/Dao.js', './assets/js/LocalStorageDao.js', './assets/js/DrawService.js', './assets/js/GameCache.js',
-        './assets/js/PersonImgSettings.js', './assets/js/Router.js',  './assets/js/GameArena.js',
+        './assets/js/PersonImgSettings.js', './assets/js/Router.js', './assets/js/Levels.js',  './assets/js/GameArena.js',
         './assets/js/script.js', './assets/js/main.js'])
         .pipe(concat('all.js'))
         .pipe(gulp.dest('build'));

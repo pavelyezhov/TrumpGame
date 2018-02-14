@@ -4,8 +4,7 @@ class GameArena {
         this.fbDao = new DAO();
         this.lsDao = new LocalStorageDao();
         this.fbDao.init();
-        //this.fbDao.loadItems();
-        //this.fbDao.clearFrames();
+
 
         this.gameCache = new GameCache();
 
@@ -35,6 +34,9 @@ class GameArena {
         this.img = new Image();  // Создание нового объекта изображения
         this.img.src = 'img/grass.png';
 
+        this.currLvl = 1;
+        this.lvls =  Levels.getLevels();
+
         //this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
 
 
@@ -62,9 +64,7 @@ class GameArena {
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         //this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
-
     }
 
     updateState() {
@@ -81,6 +81,8 @@ class GameArena {
                 return;
             }
         }
+
+        this.checkCurrentLevelPassed();
 
         this.person.newPos({
             right: this.keys && this.keys[39],
@@ -100,6 +102,22 @@ class GameArena {
         });
     }
 
+    checkCurrentLevelPassed(){
+        var currLvlObj = this.lvls[this.currLvl - 1];
+        if (currLvlObj && this.score > currLvlObj.winScoreLimit) {
+            alert('Level ' + this.currLvl + ' is completed! Press ok to continue');
+            this.currLvl += 1;
+            this.stop();
+            resetStartButtonToInitialState();
+            if(currLvlObj.enemies){
+                this.enemies = this.enemies.concat(currLvlObj.enemies);
+            }
+            // update person position
+            this.person = new Person();
+            this.keys = undefined;
+        }
+    }
+
     anyCollisionOccurred(hero, enemies) {
 
         for (var i = 0; i < enemies.length; i++) {
@@ -113,13 +131,6 @@ class GameArena {
     collisionOccurred(obj1, obj2) {
         var xColl = false;
         var yColl = false;
-
-        /*if ((obj1.x + obj1.width >= obj2.x) && (obj1.x <= obj2.x + obj2.width)) {
-            xColl = true;
-        }
-        if ((obj1.y + obj1.height >= obj2.y) && (obj1.y <= obj2.y + obj2.height)){
-            yColl = true;
-        }*/
 
         if ((obj1.x + obj1.width / 2 >= obj2.x - obj2.width / 2) && (obj1.x - obj1.width / 2 <= obj2.x + obj2.width / 2)) {
             xColl = true;
@@ -146,20 +157,13 @@ class GameArena {
         this.stop();
 
         var playerName = prompt('Record saving', 'Unnamed player');
-        this.fbDao.saveGame(this.gameCache.frames, this.score, playerName);
-        this.lsDao.saveRecord(this.score, playerName);
-        var playAgain = confirm('Play on more time?');
-        if (playAgain) {
-            resetStartButtonToInitialState();
-            this.resetScore();
-            gameArena = new GameArena(this.canvas, FIELD_WIDTH, FIELD_HEIGHT, Person);
-            return false;
-        } else {
-            this.stepId = 1;
-            this.drawService.makePlayLastGameButtonVisible();
-            return true;
+        if(playerName){
+            this.fbDao.saveGame(this.gameCache.frames, this.score, playerName);
+            this.lsDao.saveRecord(this.score, playerName);
         }
-
+        resetStartButtonToInitialState();
+        this.resetScore();
+        gameArena = new GameArena(this.canvas, FIELD_WIDTH, FIELD_HEIGHT, Person);
     }
 
     replayLastGame() {

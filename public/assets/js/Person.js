@@ -1,5 +1,5 @@
 class Person {
-    constructor(ctx, width = 50, height = 70, color = 'green', x = 900, y = 50, imgWidth = 100, imgHeight = 100, moveDirection = 'up', pictureNumber = 0) {
+    constructor(ctx, width = 30, height = 50, color = 'green', x = 900, y = 50, imgWidth = 100, imgHeight = 100, moveDirection = 'up', pictureNumber = 0) {
         this.ctx = ctx;
         this.width = width;
         this.height = height;
@@ -29,11 +29,11 @@ class Person {
 
     update(ctx) {
         ctx.save();
-        ctx.translate(this.x, this.y);
+        /*ctx.translate(this.x, this.y);
         //ctx.rotate(this.angle);
         ctx.fillStyle = this.color;
         ctx.fillRect(this.imgWidth / -2, this.imgHeight / -2, this.imgWidth, this.imgHeight);
-        ctx.restore();
+        ctx.restore();*/
 
 
         ctx.save();
