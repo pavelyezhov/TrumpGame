@@ -105,7 +105,7 @@ class GameArena {
     checkCurrentLevelPassed(){
         var currLvlObj = this.lvls[this.currLvl - 1];
         if (currLvlObj && this.score > currLvlObj.winScoreLimit) {
-            alert('Level ' + this.currLvl + ' is completed! Press ok to continue');
+            bootbox.alert('Level ' + this.currLvl + ' is completed! Press ok to continue');
             this.currLvl += 1;
             this.stop();
             resetStartButtonToInitialState();
@@ -164,6 +164,20 @@ class GameArena {
         resetStartButtonToInitialState();
         this.resetScore();
         gameArena = new GameArena(this.canvas, FIELD_WIDTH, FIELD_HEIGHT, Person);
+
+        /*bootbox.prompt({
+            title: "What is your name?",
+            value: "Unnamed champion",
+            callback: (playerName) => {
+                if (playerName) {
+                    this.fbDao.saveGame(this.gameCache.frames, this.score, playerName);
+                    this.lsDao.saveRecord(this.score, playerName);
+                }
+                resetStartButtonToInitialState();
+                this.resetScore();
+                gameArena = new GameArena(this.canvas, FIELD_WIDTH, FIELD_HEIGHT, Person);
+            }
+        });*/
     }
 
     replayLastGame() {

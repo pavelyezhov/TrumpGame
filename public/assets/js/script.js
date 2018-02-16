@@ -16,9 +16,9 @@ var routes = [
     {
         name: 'about',
         match: /[/]about/,
-        onBeforeEnter: () => {},
+        onBeforeEnter: () => {setElementAndParentStyle('aboutLink', 'active');},
         onEnter: () => console.log(`onEnter about`),
-        onLeave: () => {}
+        onLeave: () => {setElementAndParentStyle('aboutLink', '');}
     },
     {
         name: 'game',
@@ -30,6 +30,7 @@ var routes = [
                 resetStartButtonToInitialState();
                 makeReplayAreaPassive();
                 makeControlsAreaActive();
+                setElementAndParentStyle('gameLink', 'active');
             }
         },
         onEnter: () => {},
@@ -44,6 +45,7 @@ var routes = [
             // Change action icon
             var controlsArea = document.getElementById('controlsArea');
             controlsArea.children[0].src = 'img/play.png';
+            setElementAndParentStyle('gameLink', '');
             gameArena.stop();
         }
     },
@@ -77,13 +79,15 @@ var routes = [
         match: /[/]records/,
         onBeforeEnter: () => {
             var recordsArea = document.getElementById('recordsArea');
-            recordsArea.className = 'recordsArea active';
+            recordsArea.className = 'active';
             recordsArea.style.width = document.documentElement.clientWidth;
             recordsArea.style.height = document.documentElement.clientHeight;
 
             var tableArea = document.getElementById('recordTableId');
             tableArea.innerHTML = drawService.createRecordTableHTML();
-            tableArea.className = 'tableArea activeTable';
+            tableArea.className = 'table';
+
+            setElementAndParentStyle('recordLink', 'active');
 
         },
         onEnter: () => {},
@@ -93,12 +97,16 @@ var routes = [
 
             var tableArea = document.getElementById('recordTableId');
             tableArea.className = 'tableArea passive';
+
+            setElementAndParentStyle('recordLink', '');
         }
     },
     {
         name: 'replays',
         match: /[/]replays/,
         onBeforeEnter: () => {
+            setElementAndParentStyle('replayLink', 'active');
+
             var replaysPage = document.getElementById('replaysPage');
             replaysPage.className = 'replaysPage active';
             replaysPage.style.width = document.documentElement.clientWidth;
@@ -110,12 +118,14 @@ var routes = [
                 //console.log(element.child('content').key + ':' + element.child('content').val());
 
                 tableArea.innerHTML = drawService.createReplayTableHTML( Object.values(element.val()));
-                tableArea.className = 'tableArea activeTable';
+                tableArea.className = 'table';
             });
 
         },
         onEnter: () => console.log(`onEnter about`),
         onLeave: () => {
+            setElementAndParentStyle('replayLink', '');
+
             var recordsArea = document.getElementById('replaysPage');
             recordsArea.className = 'replaysPage passive';
 
@@ -130,6 +140,8 @@ var routes = [
 function prepareElements(){
 
     location.hash = '/game';
+    FIELD_HEIGHT = document.documentElement.clientHeight - document.getElementsByTagName('nav')[0].clientHeight;
+
 
     var options = {
         routes: routes
@@ -185,6 +197,12 @@ function makeReplayAreaPassive(){
 function makeControlsAreaActive(){
     var controlsArea = document.getElementById('controlsArea');
     controlsArea.className = '';
+}
+
+function setElementAndParentStyle(id, style){
+    var element = document.getElementById(id);
+    element.className = style;
+    element.parentElement.className = style;
 }
 
 

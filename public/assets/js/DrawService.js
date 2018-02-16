@@ -14,18 +14,18 @@ class DrawService {
     }
 
     createRecordTableHTML() {
-        var tableHTML = '<table><tr><th>Player</th><th>Score</th></tr>';
+        var tableHTML = '<table  class="table"><thead><tr><th>Player</th><th>Score</th></tr></thead><tbody>';
         var records = this.dao.getStoredData('playerRecordsId');
 
         for (var key in records) {
             tableHTML += '<tr><td>' + key + '</td><td>' + records[key] + '</td></tr>';
         }
-        tableHTML += '</table>';
+        tableHTML += '</tbody></table>';
         return tableHTML;
     }
 
     createReplayTableHTML(data) {
-        var tableHTML = '<table><tr><th>Player</th><th>Score</th><th>Time</th></tr>';
+        var tableHTML = '<table class="table"><thead><tr><th>Player</th><th>Score</th><th>Time</th></tr></thead><tbody>';
 
 
         for (var i = 0; i < data.length; i++) {
@@ -39,7 +39,7 @@ class DrawService {
                 '<td>' + new Date(time).toLocaleString() + '</td>' +
                 '</tr>';
         }
-        tableHTML += '</table>';
+        tableHTML += '</tbody></table>';
         return tableHTML;
 
     }
