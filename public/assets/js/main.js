@@ -1,4 +1,4 @@
-import prepareElements from './script';
+import { prepareElements } from './script';
 
 (function(){
     prepareElements();
