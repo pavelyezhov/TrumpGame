@@ -49,7 +49,7 @@ class GameArena {
 
         this.interval = setInterval(this.updateState.bind(this), 50);
         window.addEventListener('keydown', (e) => {
-            e.preventDefault();
+            //e.preventDefault();
             this.keys = (this.keys || []);
             this.keys[e.keyCode] = (e.type == "keydown");
         });
@@ -157,13 +157,6 @@ class GameArena {
         this.stop();
 
         var playerName = prompt('Record saving', 'Unnamed player');
-        if(playerName){
-            this.fbDao.saveGame(this.gameCache.frames, this.score, playerName);
-            this.lsDao.saveRecord(this.score, playerName);
-        }
-        resetStartButtonToInitialState();
-        this.resetScore();
-        gameArena = new GameArena(this.canvas, FIELD_WIDTH, FIELD_HEIGHT, Person);
 
         /*bootbox.prompt({
             title: "What is your name?",
@@ -178,6 +171,16 @@ class GameArena {
                 gameArena = new GameArena(this.canvas, FIELD_WIDTH, FIELD_HEIGHT, Person);
             }
         });*/
+
+        if(playerName){
+            this.fbDao.saveGame(this.gameCache.frames, this.score, playerName);
+            this.lsDao.saveRecord(this.score, playerName);
+        }
+        resetStartButtonToInitialState();
+        this.resetScore();
+        gameArena = new GameArena(this.canvas, FIELD_WIDTH, FIELD_HEIGHT, Person);
+
+
     }
 
     replayLastGame() {
