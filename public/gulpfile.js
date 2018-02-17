@@ -10,7 +10,6 @@ var jshint = require('gulp-jshint'),
     stylish = require('jshint-stylish'), //pretty output into console
     cssmin = require('gulp-cssmin'),
     sass = require('gulp-sass');
-var concat = require('gulp-concat');
 
 var srcPath = './assets';
 var paths = {
@@ -36,13 +35,13 @@ gulp.task('concat', function() {
 
 gulp.task('js-babel', function(){
     return browserify({
-        entries: './build/all.js'
+        entries: './assets/js/main.js' //entries: './build/all.js'
     })
         .transform(babelify.configure({
             presets : ['es2015']
         }))
         .bundle()
-        .pipe(source('all.js'))
+        .pipe(source('main.js')) //.pipe(source('all.js'))
         .pipe(buffer())
         .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))
@@ -78,4 +77,4 @@ gulp.task('watch', function(){
     gulp.watch(paths.sass, ['sass-compile']);
 });
 
-gulp.task('default', ['js-babel', 'jshint', 'sass-compile', 'concat' ,'watch']);
+gulp.task('default', ['js-babel', 'jshint', 'sass-compile', 'watch']); //gulp.task('default', ['js-babel', 'jshint', 'sass-compile', 'concat' ,'watch']);

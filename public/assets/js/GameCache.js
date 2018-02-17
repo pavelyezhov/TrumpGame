@@ -37,3 +37,5 @@ class GameCache {
 
     }
 }
+
+export default GameCache;

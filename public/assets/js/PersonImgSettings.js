@@ -168,3 +168,4 @@ class PersonImgSettings {
     }
 
 }
+export default PersonImgSettings;

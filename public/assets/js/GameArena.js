@@ -1,3 +1,12 @@
+import DAO from './Dao';
+import LocalStorageDao from './LocalStorageDao';
+import DrawService from './DrawService';
+import GameCache from './GameCache';
+import EnemyType1 from './EnemyType1';
+import EnemyType2 from './EnemyType2';
+import Person from './Person';
+import Levels from './Levels';
+
 class GameArena {
 
     constructor(element, width, height, Person) {
@@ -254,3 +263,5 @@ class GameArena {
         });
     }
 }
+
+export default GameArena;

@@ -1,3 +1,5 @@
+import PersonImgSettings from './PersonImgSettings';
+
 class Person {
     constructor(ctx, width = 30, height = 50, color = 'green', x = 900, y = 50, imgWidth = 100, imgHeight = 100, moveDirection = 'up', pictureNumber = 0) {
         this.ctx = ctx;
@@ -109,3 +111,5 @@ class Person {
     }
 
 }
+
+export default Person;

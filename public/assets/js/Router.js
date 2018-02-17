@@ -67,3 +67,4 @@ class Router {
         this.currentRouteParams = newRouteParams;
     }
 }
+export default Router;
