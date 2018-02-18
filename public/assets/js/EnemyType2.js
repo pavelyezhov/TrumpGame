@@ -1,3 +1,5 @@
+import Person from './Person';
+
 class EnemyType2 extends Person {
     constructor(ctx, width = 30, height = 30, color = 'blue', x = 400, y = 400) {
         super();
@@ -12,20 +14,20 @@ class EnemyType2 extends Person {
         this.y = y;
     }
 
-    newPos() {
+    newPos(xPerson, yPerson, fieldWidth, fieldHeight) {
         this.x += 2;
 
 
-        if (this.x > FIELD_WIDTH) {
+        if (this.x > fieldWidth) {
             this.x = 0;
         } else if (this.x < 0) {
-            this.x = FIELD_WIDTH;
+            this.x = fieldWidth;
         }
 
-        if (this.y > FIELD_HEIGHT) {
+        if (this.y > fieldHeight) {
             this.y = 0;
         } else if (this.y < 0) {
-            this.y = FIELD_HEIGHT;
+            this.y = fieldHeight;
         }
         return this;
     }

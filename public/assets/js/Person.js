@@ -1,7 +1,8 @@
 import PersonImgSettings from './PersonImgSettings';
 
 class Person {
-    constructor(ctx, width = 30, height = 50, color = 'green', x = 900, y = 50, imgWidth = 100, imgHeight = 100, moveDirection = 'up', pictureNumber = 0) {
+    constructor(ctx, width = 30, height = 50, color = 'green', x = 900, y = 50, imgWidth = 100, imgHeight = 100, moveDirection = 'up', pictureNumber = 0,
+                xPerson, yPerson) {
         this.ctx = ctx;
         this.width = width;
         this.height = height;
@@ -59,7 +60,7 @@ class Person {
         return this;
     }
 
-    newPos(options) {
+    newPos(options,  fieldWidth, fieldHeight) {
         this.moveAngle = 0;
         this.speed = 0;
 
@@ -76,18 +77,18 @@ class Person {
         this.y -= this.deltaY;
 
 
-        xPerson = this.x;
-        yPerson = this.y;
+        this.xPerson = this.x;
+        this.yPerson = this.y;
 
-        if (this.x > FIELD_WIDTH) {
+        if (this.x > fieldWidth) {
             this.x = 0;
         } else if (this.x < 0) {
-            this.x = FIELD_WIDTH;
+            this.x = fieldWidth;
         }
-        if (this.y > FIELD_HEIGHT) {
+        if (this.y > fieldHeight) {
             this.y = 0;
         } else if (this.y < 0) {
-            this.y = FIELD_HEIGHT;
+            this.y = fieldHeight;
         }
         return this;
     }

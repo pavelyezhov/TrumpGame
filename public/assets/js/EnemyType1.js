@@ -1,3 +1,5 @@
+import Person from './Person';
+
 class EnemyType1 extends Person {
     constructor(ctx, width = 30, height = 30, color = 'red', x = 600, y = 300, speedV = 0, speedH = 5, radius = 200) {
         super();
@@ -15,12 +17,12 @@ class EnemyType1 extends Person {
         this.visionRadius = radius;
     }
 
-    newPos() {
+    newPos(xPerson, yPerson, fieldWidth, fieldHeight) {
         var step = 3;
         var deltaX;
         var deltaY;
 
-        if (this.heroInVision()) {
+        if (this.heroInVision(xPerson, yPerson)) {
             deltaX = defineXStepSigh(this.x, step);
             deltaY = defineYStepSigh(this.y, step);
         } else {
@@ -31,35 +33,35 @@ class EnemyType1 extends Person {
         this.x += deltaX;
         this.y += deltaY;
 
-        if (this.x > FIELD_WIDTH) {
+        if (this.x > fieldWidth) {
             this.x = 0;
         } else if (this.x < 0) {
-            this.x = FIELD_WIDTH;
+            this.x = fieldWidth;
         }
 
-        if (this.y > FIELD_HEIGHT) {
+        if (this.y > fieldHeight) {
             this.y = 0;
         } else if (this.y < 0) {
-            this.y = FIELD_HEIGHT;
+            this.y = fieldHeight;
         }
         return this;
     }
 
-    xPlusDelta(x, delta) {
+    xPlusDelta(x, delta, fieldWidth) {
         if (x + delta < 0) {
             return 0;
-        } else if (x + delta > FIELD_WIDTH) {
-            return FIELD_WIDTH;
+        } else if (x + delta > fieldWidth) {
+            return fieldWidth;
         }
         return x + delta;
     }
 
 
-    yPlusDelta(y, delta) {
+    yPlusDelta(y, delta, fieldHeight) {
         if (y + delta < 0) {
             return 0;
-        } else if (y + delta > FIELD_HEIGHT) {
-            return FIELD_HEIGHT;
+        } else if (y + delta > fieldHeight) {
+            return fieldHeight;
         }
         return y + delta;
     }
@@ -84,7 +86,7 @@ class EnemyType1 extends Person {
         return this;
     }
 
-    heroInVision() {
+    heroInVision(xPerson, yPerson) {
         var deltaX = xPerson - this.x;
         var deltaY = yPerson - this.y;
 

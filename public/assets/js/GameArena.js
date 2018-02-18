@@ -6,14 +6,15 @@ import EnemyType1 from './EnemyType1';
 import EnemyType2 from './EnemyType2';
 import Person from './Person';
 import Levels from './Levels';
+import { resetStartButtonToInitialState } from './script';
+import GameArenaInstance from "./GameArenaInstance.js";
 
 class GameArena {
 
-    constructor(element, width, height, Person) {
+    constructor(element, fieldWidth, fieldHeight, Person, xPerson, yPerson) {
         this.fbDao = new DAO();
         this.lsDao = new LocalStorageDao();
         this.fbDao.init();
-
 
         this.gameCache = new GameCache();
 
@@ -37,8 +38,11 @@ class GameArena {
         this.enemies.push(new EnemyType2());
         this.enemies.push(new EnemyType2(this.ctx, 5, 5, 'blue', 600, 600, 3));*/
 
-        this.canvas.width = FIELD_WIDTH;
-        this.canvas.height = FIELD_HEIGHT;
+        this.canvas.width = fieldWidth;
+        this.canvas.height = fieldHeight;
+
+        this.xPerson = xPerson;
+        this.yPerson = yPerson;
 
         this.img = new Image();  // Создание нового объекта изображения
         this.img.src = 'img/grass.png';
@@ -55,7 +59,7 @@ class GameArena {
 
     start() {
         this.frameNo = 0;
-
+        this.person = new Person();
         this.interval = setInterval(this.updateState.bind(this), 50);
         window.addEventListener('keydown', (e) => {
             //e.preventDefault();
@@ -93,7 +97,7 @@ class GameArena {
 
         this.checkCurrentLevelPassed();
 
-        this.person.newPos({
+        var person = this.person.newPos({
             right: this.keys && this.keys[39],
             left: this.keys && this.keys[37],
             up: this.keys && this.keys[38],
@@ -102,9 +106,11 @@ class GameArena {
         //this.fbDao.saveObject(this.person, this.stepId);
         this.gameCache.saveHero(this.person, this.stepId);
 
+        /*this.yPerson = person.yPerson;
+        this.xPerson = person.xPerson;*/
 
         this.enemies.forEach((item) => {
-            item.newPos().update(this.ctx);
+            item.newPos(this.xPerson, this.yPerson, this.canvas.width, this.canvas.height).update(this.ctx);
             //this.fbDao.saveObject(item, this.stepId);
             this.gameCache.saveEnemy(item, this.stepId);
 
@@ -187,7 +193,7 @@ class GameArena {
         }
         resetStartButtonToInitialState();
         this.resetScore();
-        gameArena = new GameArena(this.canvas, FIELD_WIDTH, FIELD_HEIGHT, Person);
+        GameArenaInstance.setInstance(new GameArena(this.canvas, this.canvas.width, this.canvas.height, Person, this.xPerson, this.yPerson));
 
 
     }
@@ -230,7 +236,8 @@ class GameArena {
         }
         this.clear();
         var hero = JSON.parse(frame.hero);
-        var person = new Person(this.ctx, hero.width, hero.height, hero.color, hero.x, hero.y, hero.imgWidth, hero.imgHeight, hero.moveDirection, hero.i);
+        var person = new Person(this.ctx, hero.width, hero.height, hero.color, hero.x, hero.y, hero.imgWidth, hero.imgHeight, hero.moveDirection, hero.i,
+            this.xPerson, this.yPerson);
         person.update(this.ctx);
 
         frame.enemies.forEach((object) => {
@@ -257,7 +264,8 @@ class GameArena {
             //console.log(element.child('content').key + ':' + element.child('content').val());
             this.clear();
             var hero = JSON.parse(element.child('content').val());
-            var person = new Person(this.ctx, hero.width, hero.height, hero.color, hero.x, hero.y, hero.imgWidth, hero.imgHeight, hero.moveDirection, hero.i);
+            var person = new Person(this.ctx, hero.width, hero.height, hero.color, hero.x, hero.y, hero.imgWidth, hero.imgHeight, hero.moveDirection, hero.i,
+                this.xPerson, this.yPerson);
             person.update(this.ctx);
             this.stepId++;
         });
