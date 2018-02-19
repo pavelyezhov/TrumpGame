@@ -1,4 +1,5 @@
 import Person from './Person';
+import GameArenaInstance from "./GameArenaInstance.js";
 
 class EnemyType2 extends Person {
     constructor(ctx, width = 30, height = 30, color = 'blue', x = 400, y = 400) {
@@ -14,9 +15,8 @@ class EnemyType2 extends Person {
         this.y = y;
     }
 
-    newPos(xPerson, yPerson, fieldWidth, fieldHeight) {
+    newPos(fieldWidth, fieldHeight) {
         this.x += 2;
-
 
         if (this.x > fieldWidth) {
             this.x = 0;

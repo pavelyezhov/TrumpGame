@@ -1,11 +1,19 @@
 class GameArenaInstance {
 
-    static getInstance() {
+    static getGameArenaInstance() {
         return this.gameArena;
     }
 
-    static setInstance(gameArena) {
+    static setGameArenaInstance(gameArena) {
         this.gameArena = gameArena;
+    }
+
+    static getPersonPosition() {
+        return this.personPosition;
+    }
+
+    static setPersonPosition(personPosition) {
+        this.personPosition = personPosition;
     }
 }
 

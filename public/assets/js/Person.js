@@ -1,8 +1,9 @@
 import PersonImgSettings from './PersonImgSettings';
+import GameArenaInstance from "./GameArenaInstance.js";
 
 class Person {
-    constructor(ctx, width = 30, height = 50, color = 'green', x = 900, y = 50, imgWidth = 100, imgHeight = 100, moveDirection = 'up', pictureNumber = 0,
-                xPerson, yPerson) {
+    constructor(ctx, width = 30, height = 50, color = 'green', x = 900, y = 50,
+                imgWidth = 100, imgHeight = 100, moveDirection = 'up', pictureNumber = 0) {
         this.ctx = ctx;
         this.width = width;
         this.height = height;
@@ -76,9 +77,10 @@ class Person {
         this.x += this.deltaX;
         this.y -= this.deltaY;
 
-
-        this.xPerson = this.x;
-        this.yPerson = this.y;
+        GameArenaInstance.setPersonPosition({
+            xPerson: this.x,
+            yPerson: this.y
+        });
 
         if (this.x > fieldWidth) {
             this.x = 0;

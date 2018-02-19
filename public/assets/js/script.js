@@ -13,8 +13,12 @@ export function prepareElements(){
 
 
 // person coordinates
-    var xPerson = 0;
-    var yPerson = 0;
+
+    GameArenaInstance.setPersonPosition({
+        xPerson: 0,
+        yPerson: 0
+    });
+
     var gameIdToReplay;
     var lsdao = new LocalStorageDao();
     var fbDao = new DAO();
@@ -22,8 +26,7 @@ export function prepareElements(){
 
     var canvas = document.querySelector('canvas');
     var drawService = new DrawService(lsdao);
-    //var gameArena = new GameArena(canvas, FIELD_WIDTH, FIELD_HEIGHT, Person, xPerson, yPerson, gameArena);
-    GameArenaInstance.setInstance(new GameArena(canvas, FIELD_WIDTH, FIELD_HEIGHT, Person, xPerson, yPerson));
+    GameArenaInstance.setGameArenaInstance(new GameArena(canvas, FIELD_WIDTH, FIELD_HEIGHT, Person));
     var routes = [
         {
             name: 'about',
@@ -48,7 +51,7 @@ export function prepareElements(){
             onEnter: () => {},
             onLeave: () => {
                 // Stop the game
-                GameArenaInstance.getInstance().stop();
+                GameArenaInstance.getGameArenaInstance().stop();
 
                 // Hide game area
                 var gameArea = document.getElementById('gameArea');
@@ -58,7 +61,7 @@ export function prepareElements(){
                 var controlsArea = document.getElementById('controlsArea');
                 controlsArea.children[0].src = 'img/play.png';
                 setElementAndParentStyle('gameLink', '');
-                GameArenaInstance.getInstance().stop();
+                GameArenaInstance.getGameArenaInstance().stop();
             }
         },
         {
@@ -83,7 +86,7 @@ export function prepareElements(){
                 controlsArea.children[0].src = 'img/play.png';
 
                 // Stop the game
-                GameArenaInstance.getInstance().stop();
+                GameArenaInstance.getGameArenaInstance().stop();
             }
         },
         {
@@ -163,10 +166,10 @@ export function prepareElements(){
 
         var activeImg = this.children[0].src;
         if(activeImg.includes('play')){
-            GameArenaInstance.getInstance().start();
+            GameArenaInstance.getGameArenaInstance().start();
             this.children[0].src = 'img/pause.png';
         } else{
-            GameArenaInstance.getInstance().stop();
+            GameArenaInstance.getGameArenaInstance().stop();
             this.children[0].src = 'img/play.png';
         }
     });
@@ -174,9 +177,9 @@ export function prepareElements(){
     var replayArea = document.getElementById('replayArea');
     replayArea.addEventListener('click', function(){
         if(!gameIdToReplay){
-            GameArenaInstance.getInstance().replayLastGame();
+            GameArenaInstance.getGameArenaInstance().replayLastGame();
         }
-        GameArenaInstance.getInstance().replaySelectedGame(gameIdToReplay);
+        GameArenaInstance.getGameArenaInstance().replaySelectedGame(gameIdToReplay);
     });
 
     var tableArea = document.getElementById('replaysTableId');

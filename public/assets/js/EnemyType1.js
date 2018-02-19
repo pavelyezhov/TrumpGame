@@ -1,4 +1,5 @@
 import Person from './Person';
+import GameArenaInstance from "./GameArenaInstance.js";
 
 class EnemyType1 extends Person {
     constructor(ctx, width = 30, height = 30, color = 'red', x = 600, y = 300, speedV = 0, speedH = 5, radius = 200) {
@@ -17,12 +18,12 @@ class EnemyType1 extends Person {
         this.visionRadius = radius;
     }
 
-    newPos(xPerson, yPerson, fieldWidth, fieldHeight) {
+    newPos(fieldWidth, fieldHeight) {
         var step = 3;
         var deltaX;
         var deltaY;
 
-        if (this.heroInVision(xPerson, yPerson)) {
+        if (this.heroInVision()) {
             deltaX = defineXStepSigh(this.x, step);
             deltaY = defineYStepSigh(this.y, step);
         } else {
@@ -86,9 +87,11 @@ class EnemyType1 extends Person {
         return this;
     }
 
-    heroInVision(xPerson, yPerson) {
-        var deltaX = xPerson - this.x;
-        var deltaY = yPerson - this.y;
+    heroInVision() {
+        var personPosition = GameArenaInstance.getPersonPosition();
+
+        var deltaX = personPosition.xPerson - this.x;
+        var deltaY = personPosition.yPerson - this.y;
 
         var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
         return distance <= this.visionRadius;
@@ -100,14 +103,18 @@ class EnemyType1 extends Person {
 }
 
 function defineXStepSigh(x, step) {
-    var diff = xPerson - x;
+    var personPosition = GameArenaInstance.getPersonPosition();
+
+    var diff = personPosition.xPerson - x;
     var sign = diff === 0 ? 0 : (diff > 0 ? 1 : -1);
 
     return Math.abs(diff) < step ? sign : sign * step;
 }
 
 function defineYStepSigh(y, step) {
-    var diff = yPerson - y;
+    var personPosition = GameArenaInstance.getPersonPosition();
+
+    var diff = personPosition.yPerson - y;
     var sign = diff === 0 ? 0 : (diff > 0 ? 1 : -1);
 
     return Math.abs(diff) < step ? 0 : sign * step;

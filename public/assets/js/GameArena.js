@@ -11,7 +11,7 @@ import GameArenaInstance from "./GameArenaInstance.js";
 
 class GameArena {
 
-    constructor(element, fieldWidth, fieldHeight, Person, xPerson, yPerson) {
+    constructor(element, fieldWidth, fieldHeight, Person) {
         this.fbDao = new DAO();
         this.lsDao = new LocalStorageDao();
         this.fbDao.init();
@@ -40,9 +40,6 @@ class GameArena {
 
         this.canvas.width = fieldWidth;
         this.canvas.height = fieldHeight;
-
-        this.xPerson = xPerson;
-        this.yPerson = yPerson;
 
         this.img = new Image();  // Создание нового объекта изображения
         this.img.src = 'img/grass.png';
@@ -106,11 +103,11 @@ class GameArena {
         //this.fbDao.saveObject(this.person, this.stepId);
         this.gameCache.saveHero(this.person, this.stepId);
 
-        /*this.yPerson = person.yPerson;
-        this.xPerson = person.xPerson;*/
 
         this.enemies.forEach((item) => {
-            item.newPos(this.xPerson, this.yPerson, this.canvas.width, this.canvas.height).update(this.ctx);
+            var personPosition = GameArenaInstance.getPersonPosition();
+
+            item.newPos(this.canvas.width, this.canvas.height).update(this.ctx);
             //this.fbDao.saveObject(item, this.stepId);
             this.gameCache.saveEnemy(item, this.stepId);
 
@@ -193,7 +190,7 @@ class GameArena {
         }
         resetStartButtonToInitialState();
         this.resetScore();
-        GameArenaInstance.setInstance(new GameArena(this.canvas, this.canvas.width, this.canvas.height, Person, this.xPerson, this.yPerson));
+        GameArenaInstance.setGameArenaInstance(new GameArena(this.canvas, this.canvas.width, this.canvas.height, Person));
 
 
     }
@@ -236,8 +233,8 @@ class GameArena {
         }
         this.clear();
         var hero = JSON.parse(frame.hero);
-        var person = new Person(this.ctx, hero.width, hero.height, hero.color, hero.x, hero.y, hero.imgWidth, hero.imgHeight, hero.moveDirection, hero.i,
-            this.xPerson, this.yPerson);
+        var person = new Person(this.ctx, hero.width, hero.height, hero.color, hero.x, hero.y,
+            hero.imgWidth, hero.imgHeight, hero.moveDirection, hero.i);
         person.update(this.ctx);
 
         frame.enemies.forEach((object) => {
@@ -264,8 +261,8 @@ class GameArena {
             //console.log(element.child('content').key + ':' + element.child('content').val());
             this.clear();
             var hero = JSON.parse(element.child('content').val());
-            var person = new Person(this.ctx, hero.width, hero.height, hero.color, hero.x, hero.y, hero.imgWidth, hero.imgHeight, hero.moveDirection, hero.i,
-                this.xPerson, this.yPerson);
+            var person = new Person(this.ctx, hero.width, hero.height, hero.color, hero.x, hero.y,
+                hero.imgWidth, hero.imgHeight, hero.moveDirection, hero.i);
             person.update(this.ctx);
             this.stepId++;
         });
