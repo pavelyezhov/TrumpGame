@@ -33,9 +33,10 @@ class GameArena {
 
         this.enemies.push(new EnemyType1());
         this.enemies.push(new EnemyType1(this.ctx, 15, 15, 'blue', 300, 600, -3)); // just horiz moving
+        this.enemies.push(new EnemyType2());
         /*this.enemies.push(new EnemyType1(this.ctx, 15, 15, 'blue', 500, 600, 3, -5)); // diagonal moving
         this.enemies.push(new EnemyType1(this.ctx, 15, 15, 'blue', 300, 100, 5, 3, 100)); // diagonal moving with radius
-        this.enemies.push(new EnemyType2());
+
         this.enemies.push(new EnemyType2(this.ctx, 5, 5, 'blue', 600, 600, 3));*/
 
         this.canvas.width = fieldWidth;
@@ -261,10 +262,10 @@ class GameArena {
             var item = JSON.parse(object);
             var enemy;
             if (item.visionRadius) {
-                enemy = new EnemyType1(this.ctx, item.width, item.height, item.color, item.x, item.y, item.speedV, item.speedH, item.visionRadius);
+                enemy = new EnemyType1(this.ctx, item.width, item.height, item.color, item.x, item.y, item.speedV, item.speedH, item.visionRadius, item.i);
                 enemy.update(this.ctx, showRadiuses);
             } else {
-                enemy = new EnemyType2(this.ctx, item.width, item.height, item.color, item.x, item.y);
+                enemy = new EnemyType2(this.ctx, item.width, item.height, item.color, item.x, item.y, item.i);
                 enemy.update(this.ctx);
             }
         });

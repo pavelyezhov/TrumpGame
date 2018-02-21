@@ -27,10 +27,6 @@ class Person {
         return this.sprites[this.spriteNum];
     }
 
-    getBackGround(){
-        return [].slice.call(document.getElementsByTagName('img'))[3];
-    }
-
     update(ctx) {
         ctx.save();
         /*ctx.translate(this.x, this.y);
@@ -46,10 +42,6 @@ class Person {
         var personImgProperties = this.getPersonImg();
         ctx.drawImage(this.getSprite(), personImgProperties.sx, personImgProperties.sy, personImgProperties.sWidth,
             personImgProperties.sHeight, this.imgWidth / -2, this.imgHeight / -2, this.imgWidth, this.imgHeight);
-
-        /*this.img = new Image();  // Создание нового объекта изображения
-        this.img.src = 'img/grass.png';
-        ctx.drawImage(this.img, 0, 0);*/
 
         ctx.restore();
 
