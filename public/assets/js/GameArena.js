@@ -116,7 +116,7 @@ class GameArena {
             left: this.keys && this.keys[37],
             up: this.keys && this.keys[38],
             down: this.keys && this.keys[40],
-        }).update(this.ctx);
+        }, this.canvas.width, this.canvas.height).update(this.ctx);
         this.gameCache.saveHero(this.person, this.stepId);
         this.enemies.forEach((item) => {
             var personPosition = GameArenaInstance.getPersonPosition();
