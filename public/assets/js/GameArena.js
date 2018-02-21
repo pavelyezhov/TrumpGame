@@ -47,7 +47,12 @@ class GameArena {
         this.currLvl = 1;
         this.lvls =  Levels.getLevels();
 
-        if(GameArenaInstance.getShowBackground()){
+        if(GameArenaInstance.getInReplay() === false && GameArenaInstance.getShowBackground()){
+            this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
+        }
+        if(GameArenaInstance.getInReplay() && this.frames[this.stepId].imageSource !== undefined){
+            this.img = new Image();
+            this.img.src = this.frames[this.stepId].imageSource;
             this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
         }
         this.updateState();
@@ -74,7 +79,12 @@ class GameArena {
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        if(GameArenaInstance.getShowBackground()){
+        if(GameArenaInstance.getInReplay() === false && GameArenaInstance.getShowBackground()){
+            this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
+        }
+        if(GameArenaInstance.getInReplay() && this.frames[this.stepId].imageSource !== undefined){
+            this.img = new Image();
+            this.img.src = this.frames[this.stepId].imageSource;
             this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
         }
     }
@@ -96,24 +106,28 @@ class GameArena {
 
         this.checkCurrentLevelPassed();
 
+        var gameInProgressAndRadiusesAllowed =  GameArenaInstance.getInReplay() === false && GameArenaInstance.getShowRadiuses();
+        var inReplayStateAndRadiusesAllowed =  GameArenaInstance.getInReplay() && this.frames[this.stepId].showRadiuses === true;
+        var showRadiuses = inReplayStateAndRadiusesAllowed || gameInProgressAndRadiusesAllowed;
+
         var person = this.person.newPos({
             right: this.keys && this.keys[39],
             left: this.keys && this.keys[37],
             up: this.keys && this.keys[38],
             down: this.keys && this.keys[40],
         }).update(this.ctx);
-        //this.fbDao.saveObject(this.person, this.stepId);
         this.gameCache.saveHero(this.person, this.stepId);
-
-
         this.enemies.forEach((item) => {
             var personPosition = GameArenaInstance.getPersonPosition();
 
-            item.newPos(this.canvas.width, this.canvas.height).update(this.ctx);
-            //this.fbDao.saveObject(item, this.stepId);
+            item.newPos(this.canvas.width, this.canvas.height).update(this.ctx, showRadiuses);
             this.gameCache.saveEnemy(item, this.stepId);
 
         });
+        if(GameArenaInstance.getShowBackground()) {
+            this.gameCache.saveBackGroundImage(this.img.src , this.stepId);
+        }
+        this.gameCache.savePersonRadiusesShowOption(this.stepId, GameArenaInstance.getShowRadiuses());
     }
 
     checkCurrentLevelPassed(){
@@ -239,12 +253,16 @@ class GameArena {
             hero.imgWidth, hero.imgHeight, hero.moveDirection, hero.i);
         person.update(this.ctx);
 
+        var gameInProgressAndRadiusesAllowed =  GameArenaInstance.getInReplay() === false && GameArenaInstance.getShowRadiuses();
+        var inReplayStateAndRadiusesAllowed =  GameArenaInstance.getInReplay() && this.frames[this.stepId].showRadiuses === true;
+        var showRadiuses = inReplayStateAndRadiusesAllowed || gameInProgressAndRadiusesAllowed;
+
         frame.enemies.forEach((object) => {
             var item = JSON.parse(object);
             var enemy;
             if (item.visionRadius) {
                 enemy = new EnemyType1(this.ctx, item.width, item.height, item.color, item.x, item.y, item.speedV, item.speedH, item.visionRadius);
-                enemy.update(this.ctx);
+                enemy.update(this.ctx, showRadiuses);
             } else {
                 enemy = new EnemyType2(this.ctx, item.width, item.height, item.color, item.x, item.y);
                 enemy.update(this.ctx);

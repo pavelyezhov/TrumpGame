@@ -67,7 +67,7 @@ class EnemyType1 extends Person {
         return y + delta;
     }
 
-    update(ctx) {
+    update(ctx, showRadiuses) {
 
         var centerX = this.x;
         var centerY = this.y;
@@ -79,11 +79,13 @@ class EnemyType1 extends Person {
         ctx.fillRect(this.width / -2, this.height / -2, this.width, this.height);
         ctx.restore();
 
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, this.visionRadius, 0, 2 * Math.PI, false);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = '#003300';
-        ctx.stroke();
+        if(showRadiuses){
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, this.visionRadius, 0, 2 * Math.PI, false);
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#003300';
+            ctx.stroke();
+        }
         return this;
     }
 

@@ -18,6 +18,20 @@ class GameCache {
         this.frames[frameId].enemies.push(JSON.stringify(enemy));
     }
 
+    saveBackGroundImage(imgSrc, frameId) {
+        if (!this.frames[frameId]) {
+            this.initFrame(frameId);
+        }
+        this.frames[frameId].imageSource = imgSrc;
+    }
+
+    savePersonRadiusesShowOption(frameId, showRadiuses){
+        if (!this.frames[frameId]) {
+            this.initFrame(frameId);
+        }
+        this.frames[frameId].showRadiuses = showRadiuses;
+    }
+
     initFrame(frameId) {
         if (this.frames.length === 0) {
             this.frames.push({

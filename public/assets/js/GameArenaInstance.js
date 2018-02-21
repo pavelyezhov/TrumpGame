@@ -21,8 +21,27 @@ class GameArenaInstance {
     }
 
     static setShowBackground(showBackground) {
-        return this.showBackground = showBackground;
+        this.showBackground = showBackground;
     }
+
+    static getShowRadiuses() {
+        return this.showRadiusesId;
+    }
+
+    static setShowRadiuses(showRadiusesId) {
+        this.showRadiusesId = showRadiusesId;
+    }
+
+    static getInReplay() {
+        return this.inReplay;
+    }
+
+    static setInReplay(inReplay) {
+        this.inReplay = inReplay;
+    }
+
+
+
 }
 
 export default GameArenaInstance;

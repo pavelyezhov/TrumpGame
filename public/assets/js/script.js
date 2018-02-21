@@ -195,6 +195,7 @@ export function prepareElements(){
             GameArenaInstance.getGameArenaInstance().stop();
             this.children[0].src = 'img/play.png';
         }
+        GameArenaInstance.setInReplay(false);
     });
 
     var replayArea = document.getElementById('replayArea');
@@ -202,6 +203,7 @@ export function prepareElements(){
         if(!gameIdToReplay){
             GameArenaInstance.getGameArenaInstance().replayLastGame();
         }
+        GameArenaInstance.setInReplay(true);
         GameArenaInstance.getGameArenaInstance().replaySelectedGame(gameIdToReplay);
     });
 
@@ -225,6 +227,20 @@ export function prepareElements(){
             GameArenaInstance.setShowBackground(this.checked);
         }
     });
+
+    var showRadiusesCheckBox = document.getElementById('showRadiusesId');
+
+    showRadiusesCheckBox.addEventListener( 'change', function(){
+        var showRadiusesId = GameArenaInstance.getShowRadiuses();
+
+        if(showRadiusesId != undefined){
+            GameArenaInstance.setShowRadiuses(!showRadiusesId);
+        } else{
+            GameArenaInstance.setShowRadiuses(this.checked);
+        }
+    });
+
+
 }
 
 export function resetStartButtonToInitialState(){
