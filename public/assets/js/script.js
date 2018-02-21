@@ -28,13 +28,7 @@ export function prepareElements(){
     var drawService = new DrawService(lsdao);
     GameArenaInstance.setGameArenaInstance(new GameArena(canvas, FIELD_WIDTH, FIELD_HEIGHT, Person));
     var routes = [
-        {
-            name: 'about',
-            match: /[/]about/,
-            onBeforeEnter: () => {setElementAndParentStyle('aboutLink', 'active');},
-            onEnter: () => console.log(`onEnter about`),
-            onLeave: () => {setElementAndParentStyle('aboutLink', '');}
-        },
+
         {
             name: 'game',
             match: /[/]game/,
@@ -85,6 +79,9 @@ export function prepareElements(){
                 var controlsArea = document.getElementById('controlsArea');
                 controlsArea.children[0].src = 'img/play.png';
 
+                var replayArea = document.getElementById('replayArea');
+                replayArea.className = 'replayArea passive';
+
                 // Stop the game
                 GameArenaInstance.getGameArenaInstance().stop();
             }
@@ -129,7 +126,7 @@ export function prepareElements(){
 
                 var tableArea = document.getElementById('replaysTableId');
 
-                this.fbDao.loadGames().once('value').then(element=>{
+                fbDao.loadGames().once('value').then(element=>{
                     //console.log(element.child('content').key + ':' + element.child('content').val());
 
                     tableArea.innerHTML = drawService.createReplayTableHTML( Object.values(element.val()));
@@ -146,6 +143,32 @@ export function prepareElements(){
 
                 var tableArea = document.getElementById('replaysTableId');
                 tableArea.className = 'tableArea passive';
+            }
+        },
+        {
+            name: 'about',
+            match: /[/]about/,
+            onBeforeEnter: () => {
+                setElementAndParentStyle('aboutLink', 'active');
+                setElementAndParentStyle('aboutArea', 'aboutArea active');
+                },
+            onEnter: () => console.log(`onEnter about`),
+            onLeave: () => {
+                setElementAndParentStyle('aboutLink', '');
+                setElementStyle('aboutArea', 'aboutArea passive');
+            }
+        },
+        {
+            name: 'options',
+            match: /[/]options/,
+            onBeforeEnter: () => {
+                setElementAndParentStyle('optionsLink', 'active');
+                setElementAndParentStyle('settingsArea', 'settingsArea active');
+            },
+            onEnter: () => console.log(`onEnter about`),
+            onLeave: () => {
+                setElementAndParentStyle('optionsLink', '');
+                setElementStyle('settingsArea', 'settingsArea passive');
             }
         }
     ];
@@ -189,6 +212,19 @@ export function prepareElements(){
             drawService.makePlayLastGameButtonVisible();
         }
     });
+
+
+    var showBackgroundCheckBox = document.getElementById('showBackgroundId');
+
+    showBackgroundCheckBox.addEventListener( 'change', function(){
+        var showBackground = GameArenaInstance.getShowBackground();
+
+        if(showBackground != undefined){
+            GameArenaInstance.setShowBackground(!showBackground);
+        } else{
+            GameArenaInstance.setShowBackground(this.checked);
+        }
+    });
 }
 
 export function resetStartButtonToInitialState(){
@@ -212,6 +248,11 @@ function setElementAndParentStyle(id, style){
     var element = document.getElementById(id);
     element.className = style;
     element.parentElement.className = style;
+}
+
+function setElementStyle(id, style){
+    var element = document.getElementById(id);
+    element.className = style;
 }
 
 

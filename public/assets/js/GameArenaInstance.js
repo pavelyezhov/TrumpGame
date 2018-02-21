@@ -15,6 +15,14 @@ class GameArenaInstance {
     static setPersonPosition(personPosition) {
         this.personPosition = personPosition;
     }
+
+    static getShowBackground() {
+        return this.showBackground;
+    }
+
+    static setShowBackground(showBackground) {
+        return this.showBackground = showBackground;
+    }
 }
 
 export default GameArenaInstance;

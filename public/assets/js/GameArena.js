@@ -47,9 +47,9 @@ class GameArena {
         this.currLvl = 1;
         this.lvls =  Levels.getLevels();
 
-        //this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
-
-
+        if(GameArenaInstance.getShowBackground()){
+            this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
+        }
         this.updateState();
         //this.start();
     }
@@ -74,7 +74,9 @@ class GameArena {
 
     clear() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        //this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
+        if(GameArenaInstance.getShowBackground()){
+            this.ctx.drawImage(this.img, 0, 0, this.canvas.width, this.canvas.height);
+        }
     }
 
     updateState() {
