@@ -56,7 +56,7 @@ class EnemyType2 extends Person {
 
         var personImgProperties = this.getCatImg();
         ctx.drawImage(this.getSprite(), personImgProperties.sx, personImgProperties.sy, personImgProperties.sWidth,
-            personImgProperties.sHeight, this.imgWidth, this.imgHeight, this.imgWidth, this.imgHeight);
+            personImgProperties.sHeight, this.imgWidth/ -2, this.imgHeight/ -2, this.imgWidth, this.imgHeight);
 
         this.i += 1;
         if (this.i % 4 === 0) {
