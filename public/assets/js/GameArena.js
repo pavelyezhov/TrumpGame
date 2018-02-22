@@ -2,8 +2,8 @@ import DAO from './Dao';
 import LocalStorageDao from './LocalStorageDao';
 import DrawService from './DrawService';
 import GameCache from './GameCache';
-import EnemyType1 from './EnemyType1';
-import EnemyType2 from './EnemyType2';
+import EnemyType1 from './settings/EnemyType1';
+import EnemyType2 from './settings/EnemyType2';
 import Person from './Person';
 import Levels from './Levels';
 import { resetStartButtonToInitialState } from './script';
@@ -33,7 +33,11 @@ class GameArena {
 
         this.enemies.push(new EnemyType1());
         this.enemies.push(new EnemyType1(this.ctx, 15, 15, 'blue', 300, 600, -3)); // just horiz moving
-        this.enemies.push(new EnemyType2());
+        this.enemies.push(new EnemyType2(this.ctx, 32, 32, 'blue', 600, 600, 0, 'right'));
+        this.enemies.push(new EnemyType2(this.ctx, 32, 32, 'blue', 650, 650, 0, 'left'));
+        this.enemies.push(new EnemyType2(this.ctx, 16, 16, 'blue', 700, 700, 0, 'down'));
+        this.enemies.push(new EnemyType2(this.ctx, 16, 16, 'blue', 750, 750, 0, 'up'));
+
         /*this.enemies.push(new EnemyType1(this.ctx, 15, 15, 'blue', 500, 600, 3, -5)); // diagonal moving
         this.enemies.push(new EnemyType1(this.ctx, 15, 15, 'blue', 300, 100, 5, 3, 100)); // diagonal moving with radius
 
@@ -187,20 +191,6 @@ class GameArena {
 
         var playerName = prompt('Record saving', 'Unnamed player');
 
-        /*bootbox.prompt({
-            title: "What is your name?",
-            value: "Unnamed champion",
-            callback: (playerName) => {
-                if (playerName) {
-                    this.fbDao.saveGame(this.gameCache.frames, this.score, playerName);
-                    this.lsDao.saveRecord(this.score, playerName);
-                }
-                resetStartButtonToInitialState();
-                this.resetScore();
-                gameArena = new GameArena(this.canvas, FIELD_WIDTH, FIELD_HEIGHT, Person);
-            }
-        });*/
-
         if(playerName){
             this.fbDao.saveGame(this.gameCache.frames, this.score, playerName);
             this.lsDao.saveRecord(this.score, playerName);
@@ -208,6 +198,7 @@ class GameArena {
         resetStartButtonToInitialState();
         this.resetScore();
         GameArenaInstance.setGameArenaInstance(new GameArena(this.canvas, this.canvas.width, this.canvas.height, Person));
+        this.clear();
 
 
     }

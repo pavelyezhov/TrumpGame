@@ -1,14 +1,14 @@
-import Person from './Person';
+import Person from '../Person';
 import CatImgSettings from './CatImgSettings';
 
 class EnemyType2 extends Person {
-    constructor(ctx, width = 32, height = 32, color = 'blue', x = 400, y = 400, pictureNumber = 0) {
+    constructor(ctx, width = 32, height = 32, color = 'blue', x = 400, y = 400, pictureNumber = 0, moveDirection = 'right') {
         super();
         this.ctx = ctx;
         this.width = width;
         this.height = height;
         this.color = color;
-        this.speed = 0;
+        this.speed = 5;
         this.angle = 0;
         this.moveAngle = 0;
         this.x = x;
@@ -19,7 +19,7 @@ class EnemyType2 extends Person {
 
         this.sprites = [].slice.call(document.querySelectorAll('.cat-img'));
         this.spriteNum = 0;
-        this.moveDirection = 'right';
+        this.moveDirection = moveDirection;
         this.i = pictureNumber;
     }
 
@@ -29,7 +29,8 @@ class EnemyType2 extends Person {
     }
 
     newPos(fieldWidth, fieldHeight) {
-        this.x += 5;
+
+        this.doStepDependingOnDirection();
 
         if (this.x > fieldWidth) {
             this.x = 0;
@@ -43,6 +44,18 @@ class EnemyType2 extends Person {
             this.y = fieldHeight;
         }
         return this;
+    }
+
+    doStepDependingOnDirection(){
+        if(this.moveDirection === 'right'){
+            this.x += this.speed;
+        } else if(this.moveDirection === 'left'){
+            this.x -= this.speed;
+        } else if(this.moveDirection === 'up'){
+            this.y -= this.speed;
+        } else if(this.moveDirection === 'down'){
+            this.y += this.speed;
+        }
     }
 
     update(ctx) {
@@ -86,7 +99,7 @@ class EnemyType2 extends Person {
         }
 
         // default direction
-        return PersonImgSettings.getDownSettings()[this.i];
+        return CatImgSettings.getDownSettings()[this.i];
     }
 }
 export default EnemyType2;
