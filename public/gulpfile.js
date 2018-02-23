@@ -43,7 +43,7 @@ gulp.task('js-babel', function(){
         .bundle()
         .pipe(source('main.js')) //.pipe(source('all.js'))
         .pipe(buffer())
-        //.pipe(uglify())
+        .pipe(uglify())
         .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest('build'))
 });

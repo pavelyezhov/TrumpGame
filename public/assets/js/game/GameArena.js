@@ -58,7 +58,7 @@ class GameArena {
 
     start() {
         this.frameNo = 0;
-        this.person = new Person();
+        //this.person = new Person();
         this.interval = setInterval(this.updateState.bind(this), 50);
         window.addEventListener('keydown', (e) => {
             //e.preventDefault();
