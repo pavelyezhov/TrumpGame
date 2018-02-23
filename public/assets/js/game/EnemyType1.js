@@ -1,9 +1,9 @@
-import Person from '../Person';
-import GameArenaInstance from "../GameArenaInstance.js";
-import JesusImgSettings from './JesusImgSettings';
+import Person from './Person';
+import GameArenaInstance from "./GameArenaInstance.js";
+import JesusImgSettings from '../settings/JesusImgSettings';
 
 class EnemyType1 extends Person {
-    constructor(ctx, width = 30, height = 30, color = 'red', x = 600, y = 300, speedV = 0, speedH = 5, radius = 200, pictureNumber = 0) {
+    constructor(ctx, width = 30, height = 30, color = 'red', x = 600, y = 300, speedV = 0, speedH = 5, radius = 200, pictureNumber = 0, moveDirection = 'right') {
         super();
         this.ctx = ctx;
         this.width = width;
@@ -20,7 +20,7 @@ class EnemyType1 extends Person {
         this.imgHeight = 48;
 
         this.visionRadius = radius;
-        this.moveDirection = 'right';
+        this.moveDirection = moveDirection;
 
         this.sprites = [].slice.call(document.querySelectorAll('.Jesus-img'));
         this.spriteNum = 0;

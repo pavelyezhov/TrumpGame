@@ -1,5 +1,5 @@
-import Person from '../Person';
-import CatImgSettings from './CatImgSettings';
+import Person from './Person';
+import CatImgSettings from '../settings/CatImgSettings';
 
 class EnemyType2 extends Person {
     constructor(ctx, width = 32, height = 32, color = 'blue', x = 400, y = 400, pictureNumber = 0, moveDirection = 'right') {

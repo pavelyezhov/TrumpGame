@@ -1,20 +1,17 @@
-import DAO from './Dao';
-import LocalStorageDao from './LocalStorageDao';
-import DrawService from './DrawService';
-import Router from './Router';
-import Person from './Person';
-import GameArena from './GameArena';
-import GameArenaInstance from "./GameArenaInstance.js";
+import DAO from './dao/FireBaseDao';
+import LocalStorageDao from './dao/LocalStorageDao';
+import DrawService from './service/DrawService';
+import Router from './router/Router';
+import Person from './game/Person';
+import GameArena from './game/GameArena';
+import GameArenaInstance from "./game/GameArenaInstance.js";
 
 
 export function prepareElements(){
     var FIELD_WIDTH  = document.documentElement.clientWidth;
     var FIELD_HEIGHT = document.documentElement.clientHeight - document.getElementsByTagName('nav')[0].clientHeight;
 
-
-// person coordinates
-
-    GameArenaInstance.setPersonPosition({
+   GameArenaInstance.setPersonPosition({
         xPerson: 0,
         yPerson: 0
     });
@@ -127,14 +124,13 @@ export function prepareElements(){
                 var tableArea = document.getElementById('replaysTableId');
 
                 fbDao.loadGames().once('value').then(element=>{
-                    //console.log(element.child('content').key + ':' + element.child('content').val());
 
                     tableArea.innerHTML = drawService.createReplayTableHTML( Object.values(element.val()));
                     tableArea.className = 'table';
                 });
 
             },
-            onEnter: () => console.log(`onEnter about`),
+            onEnter: () => console.log(`onEnter replays`),
             onLeave: () => {
                 setElementAndParentStyle('replayLink', '');
 
@@ -165,7 +161,7 @@ export function prepareElements(){
                 setElementAndParentStyle('optionsLink', 'active');
                 setElementAndParentStyle('settingsArea', 'settingsArea active');
             },
-            onEnter: () => console.log(`onEnter about`),
+            onEnter: () => console.log(`onEnter options`),
             onLeave: () => {
                 setElementAndParentStyle('optionsLink', '');
                 setElementStyle('settingsArea', 'settingsArea passive');

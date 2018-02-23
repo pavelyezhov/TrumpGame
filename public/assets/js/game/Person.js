@@ -1,4 +1,4 @@
-import PersonImgSettings from './PersonImgSettings';
+import PersonImgSettings from '../settings/PersonImgSettings';
 import GameArenaInstance from "./GameArenaInstance.js";
 
 class Person {
